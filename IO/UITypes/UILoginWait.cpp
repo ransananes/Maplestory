@@ -34,15 +34,28 @@ namespace ms
 		nl::node Loading = nl::nx::UI["Login.img"]["Notice"]["Loading"];
 		nl::node backgrnd = Loading["backgrnd"];
 
-		Point<int16_t> startpos = Point<int16_t>(VIEWSIZE.x() / 2, VIEWSIZE.y() / 2);
+		Point<int16_t> startpos = Point<int16_t>(0,0);
+		Sprite sizedbackgrnd = Sprite(backgrnd);
+		//sprites.emplace_back(backgrnd, (startpos,1.0f,1.2f));
+		
+		//loadingBar = Loading["bar"];
 
-		sprites.emplace_back(backgrnd, startpos + Point<int16_t>(112, 84));
-		sprites.emplace_back(Loading["circle"], startpos + Point<int16_t>(127, 70));
+		//sprites.emplace_back(Loading["circle"], startpos + Point<int16_t>(sizedbackgrnd.width()/2, sizedbackgrnd.height() - 20));
 
-		buttons[Buttons::BtCancel] = std::make_unique<MapleButton>(Loading["BtCancel"], startpos+  Point<int16_t>(2, 4));
+		//buttons[Buttons::BtCancel] = std::make_unique<MapleButton>(Loading["BtCancel"], startpos + Point<int16_t>(sizedbackgrnd.width() / 2, sizedbackgrnd.height()*1.2f - 0));
 
-		//position = Point<int16_t>(276, 229);
+		position = Point<int16_t>(276, 229);
 		dimension = Texture(backgrnd).get_dimensions();
+	}
+
+	void UILoginWait::update()
+	{
+		loadingBar.update(1);
+	}
+
+	void UILoginWait::draw(float inter)
+	{
+		loadingBar.draw(position, inter);
 	}
 
 	UIElement::Type UILoginWait::get_type() const

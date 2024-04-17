@@ -18,6 +18,7 @@
 #include "UIElement.h"
 
 #include "../Audio/Audio.h"
+#include <iostream>
 
 namespace ms
 {
@@ -56,6 +57,7 @@ namespace ms
 
 	void UIElement::makeactive()
 	{
+		std::cout << "Make_active";
 		active = true;
 	}
 

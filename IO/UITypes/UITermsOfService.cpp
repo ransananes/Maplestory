@@ -107,19 +107,20 @@ namespace ms
 
 	Button::State UITermsOfService::button_pressed(uint16_t buttonid)
 	{
+		Optional<UILogin> statusbar;
 		switch (buttonid)
 		{
 			case Buttons::OK:
 				UI::get().emplace<UILoginWait>();
-
 				TOSPacket().dispatch();
 				break;
 			case Buttons::CANCEL:
-				//UI::get().quit();
+				statusbar = UI::get().get_element<UILogin>();
+				statusbar->makeactive();
 				deactivate();
-				UI::get().emplace<UILogin>();
 				break;
 			default:
+				LOG(LOG_DEBUG, "Unknown TOS error");
 				break;
 		}
 

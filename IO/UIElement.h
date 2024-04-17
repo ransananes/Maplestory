@@ -81,7 +81,7 @@ namespace ms
 		virtual void update();
 		virtual void update_screen(int16_t new_width, int16_t new_height) {}
 
-		void makeactive();
+		virtual void makeactive();
 		void deactivate();
 		bool is_active() const;
 

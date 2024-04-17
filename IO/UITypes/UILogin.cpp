@@ -54,9 +54,6 @@ namespace ms
 		sprites.emplace_back(Title_new["MSTitle"], Point<int16_t>(VIEWSIZE.x()/3, 20));
 		sprites.emplace_back(nl::nx::UI["UIWindow.img"]["BetaEdition"]["BetaEdition"], Point<int16_t>(45, 20));
 
-	//	nl::node Tab = Title_new["Tab"];
-	//	nl::node TabD = Tab["disabled"];
-		//nl::node TabE = Tab["enabled"];
 
 		nl::node _signboard = nl::nx::Map["Obj"]["login.img"]["Title"]["signboard"];
 
@@ -163,7 +160,6 @@ namespace ms
 
 		bool has_capslocks = UI::get().has_capslocks();
 
-
 		if (has_capslocks && account.get_state() == Textfield::State::FOCUSED)
 			capslock.draw(position + title_pos - Point<int16_t>(0, 0));
 
@@ -177,6 +173,11 @@ namespace ms
 
 		account.update();
 		password.update();
+	}
+	void UILogin::makeactive()
+	{
+		account.set_state(Textfield::State::NORMAL);
+		password.set_state(Textfield::State::NORMAL);
 	}
 
 	void UILogin::login()

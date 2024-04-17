@@ -17,11 +17,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../UIElement.h"
+#include "../UIElementCentered.h"
 
 namespace ms
 {
-	class UILoginWait : public UIElement
+	class UILoginWait : public UIElementCentered
 	{
 	public:
 		static constexpr Type TYPE = UIElement::Type::LOGINWAIT;
@@ -34,6 +34,8 @@ namespace ms
 		UIElement::Type get_type() const override;
 
 		void close();
+		void update() override;
+		void draw(float inter);
 		std::function<void()> get_handler();
 
 	protected:
@@ -44,7 +46,7 @@ namespace ms
 		{
 			BtCancel
 		};
-
+		Animation loadingBar;
 		std::function<void()> okhandler;
 	};
 }

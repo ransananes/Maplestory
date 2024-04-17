@@ -37,6 +37,7 @@ namespace ms
 
 		void draw(float alpha) const override;
 		void update() override;
+		void makeactive();
 
 		Cursor::State send_cursor(bool clicked, Point<int16_t> cursor_pos) override;
 
