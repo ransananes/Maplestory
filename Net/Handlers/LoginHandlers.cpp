@@ -219,16 +219,18 @@ namespace ms
 		if (loginwait && loginwait->is_active())
 		{
 			uint8_t channel_id = recv.read_byte();
-
 			// Parse all characters
 			std::vector<CharEntry> characters;
 			int8_t charcount = recv.read_byte();
 
 			for (uint8_t i = 0; i < charcount; ++i)
+			{
 				characters.emplace_back(LoginParser::parse_charentry(recv));
-
+			}
 			int8_t pic = recv.read_byte();
+			std::cout << "pic <" << pic;
 			int32_t slots = recv.read_int();
+			std::cout << "slots <" << slots;
 
 			// Remove previous UIs
 			UI::get().remove(UIElement::Type::LOGINNOTICE);

@@ -31,21 +31,20 @@ namespace ms
 {
 	UILoginWait::UILoginWait() : UILoginWait([]() {}) {}
 
-	UILoginWait::UILoginWait(std::function<void()> okhandler) : okhandler(okhandler)
+	UILoginWait::UILoginWait(std::function<void()> okhandler) : UIElementCentered(), okhandler(okhandler)
 	{
 		nl::node Loading = nl::nx::UI["Login.img"]["Notice"]["Loading"];
 		nl::node backgrnd = Loading["backgrnd"];
 
-		Point<int16_t> startpos = Point<int16_t>(0,0);
+		Point<int16_t> startpos = Point<int16_t>(-100, -VIEWSIZE.y()/6.1);
 		Sprite sizedbackgrnd = Sprite(backgrnd);
 		sprites.emplace_back(backgrnd, DrawArgument(startpos,1.0f,1.2f));
-		sprites.emplace_back(Loading["bar"], Point<int16_t>(sizedbackgrnd.width()/2 - 10, sizedbackgrnd.height()/2 * 1.2 + 30));
+		sprites.emplace_back(Loading["bar"], startpos+Point<int16_t>(sizedbackgrnd.width()/2 - 10, sizedbackgrnd.height()/2 * 1.2 + 30));
 		
 
 		//buttons[Buttons::BtCancel] = std::make_unique<MapleButton>(Loading["BtCancel"], startpos + Point<int16_t>(sizedbackgrnd.width()/2, sizedbackgrnd.height()*1.2f - 40));
 		//timer = ContinuousTimer();
 		//timeStarted = timer.start();
-
 		dimension = Texture(backgrnd).get_dimensions();
 	}
 

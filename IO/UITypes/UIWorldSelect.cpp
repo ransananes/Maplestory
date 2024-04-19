@@ -220,6 +220,7 @@ namespace ms
 
 	void UIWorldSelect::enter_world()
 	{
+		channelid = 1;
 		Configuration::get().set_worldid(worldid);
 		Configuration::get().set_channelid(channelid);
 

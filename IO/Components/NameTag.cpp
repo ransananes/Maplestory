@@ -19,7 +19,9 @@
 
 namespace ms
 {
-	NameTag::NameTag(nl::node src, Text::Font f, std::string n)
+	NameTag::NameTag(nl::node src, Text::Font f, std::string n) : NameTag(src, f, n, Point<int16_t>(0, 0)) {};
+
+	NameTag::NameTag(nl::node src, Text::Font f, std::string n, Point<int16_t> pos)
 	{
 		name = OutlinedText(f, Text::Alignment::CENTER, Color::Name::EAGLE, Color::Name::JAMBALAYA);
 		name.change_text(n);
@@ -34,6 +36,7 @@ namespace ms
 
 		selected = false;
 	}
+
 
 	void NameTag::draw(Point<int16_t> position) const
 	{

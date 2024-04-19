@@ -32,8 +32,10 @@ namespace ms
 	class CharLook
 	{
 	public:
+		CharLook(const LookEntry& entry, Point<int16_t> pos);
 		CharLook(const LookEntry& entry);
 		CharLook();
+
 
 		void reset();
 		void draw(const DrawArgument& args, float alpha) const;
@@ -102,5 +104,7 @@ namespace ms
 		static std::unordered_map<int32_t, Hair> hairstyles;
 		static std::unordered_map<int32_t, Face> facetypes;
 		static std::unordered_map<int32_t, Body> bodytypes;
+
+		Point<int16_t> position;
 	};
 }

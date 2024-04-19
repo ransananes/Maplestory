@@ -31,7 +31,7 @@ namespace ms
 		{
 			origin = src["origin"];
 
-			if (src.root() == nl::nx::Map001)
+			if (src.root() == nl::nx::Map)
 			{
 				const std::string& _outlink = src["_outlink"];
 

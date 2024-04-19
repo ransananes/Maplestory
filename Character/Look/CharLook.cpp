@@ -18,10 +18,11 @@
 #include "CharLook.h"
 
 #include "../../Data/WeaponData.h"
+#include <iostream>
 
 namespace ms
 {
-	CharLook::CharLook(const LookEntry& entry)
+	CharLook::CharLook(const LookEntry& entry, Point<int16_t> pos)
 	{
 		reset();
 
@@ -34,7 +35,11 @@ namespace ms
 
 		for (auto& equip : entry.equips)
 			add_equip(equip.second);
+
+		position = pos;
 	}
+
+	CharLook::CharLook(const LookEntry& entry) : CharLook(entry,Point<int16_t>(0,0)){}
 
 	CharLook::CharLook()
 	{
@@ -64,6 +69,7 @@ namespace ms
 
 	void CharLook::draw(const DrawArgument& args, Stance::Id interstance, Expression::Id interexpression, uint8_t interframe, uint8_t interexpframe) const
 	{
+		//std::cout << args.getpos().x() << " X<_>Y " << args.getpos().y() << "\n";
 		Point<int16_t> faceshift = drawinfo.getfacepos(interstance, interframe);
 		DrawArgument faceargs = args + DrawArgument{ faceshift, false, Point<int16_t>(0, 0) };
 
@@ -196,14 +202,13 @@ namespace ms
 	{
 		if (!body || !hair || !face)
 			return;
-
 		Point<int16_t> acmove;
 
 		if (action)
 			acmove = action->get_move();
-
+		std::cout << position.x() << " X<_>Y " << position.y() << "\n";
 		DrawArgument relargs = { acmove, flip };
-
+		DrawArgument pos = (position);
 		Stance::Id interstance = stance.get(alpha);
 		Expression::Id interexpression = expression.get(alpha);
 		uint8_t interframe = stframe.get(alpha);
@@ -220,8 +225,9 @@ namespace ms
 				break;
 			}
 		}
-
-		draw(relargs + args, interstance, interexpression, interframe, interexpframe);
+		DrawArgument test = relargs + args + pos;
+		std::cout << pos.getpos().x() << " X<_>Y " << pos.getpos().y() << "\n";
+		draw(relargs + args + pos, interstance, interexpression, interframe, interexpframe);
 	}
 
 	void CharLook::draw(Point<int16_t> position, bool flipped, Stance::Id interstance, Expression::Id interexpression) const

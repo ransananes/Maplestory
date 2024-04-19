@@ -86,24 +86,29 @@ namespace ms
 
 	CharEntry LoginParser::parse_charentry(InPacket& recv)
 	{
+		std::cout << "I wonder where it fails?";
 		int32_t cid = recv.read_int();
+		std::cout << "cid -> \n" + cid;
+
 		StatsEntry stats = parse_stats(recv);
+		std::cout << " \n maybe higher versions has more stats??";
 		LookEntry look = parse_look(recv);
+		std::cout << " \n maybe hgiher versions has more look??";
+		std::cout << " \n@@@@@@@";
+		//recv.read_bool(); // 'rankinfo' bool
 
-		recv.read_bool(); // 'rankinfo' bool
+		//if (recv.read_bool())
+		//{
+		//	int32_t currank = recv.read_int();
+		//	int32_t rankmv = recv.read_int();
+		//	int32_t curjobrank = recv.read_int();
+		//	int32_t jobrankmv = recv.read_int();
+		//	int8_t rankmc = (rankmv > 0) ? '+' : (rankmv < 0) ? '-' : '=';
+		//	int8_t jobrankmc = (jobrankmv > 0) ? '+' : (jobrankmv < 0) ? '-' : '=';
 
-		if (recv.read_bool())
-		{
-			int32_t currank = recv.read_int();
-			int32_t rankmv = recv.read_int();
-			int32_t curjobrank = recv.read_int();
-			int32_t jobrankmv = recv.read_int();
-			int8_t rankmc = (rankmv > 0) ? '+' : (rankmv < 0) ? '-' : '=';
-			int8_t jobrankmc = (jobrankmv > 0) ? '+' : (jobrankmv < 0) ? '-' : '=';
-
-			stats.rank = std::make_pair(currank, rankmc);
-			stats.jobrank = std::make_pair(curjobrank, jobrankmc);
-		}
+		//	stats.rank = std::make_pair(currank, rankmc);
+		//	stats.jobrank = std::make_pair(curjobrank, jobrankmc);
+		//}
 
 		return { stats, look, cid };
 	}
@@ -186,7 +191,6 @@ namespace ms
 
 	void LoginParser::parse_login(InPacket& recv)
 	{
-		std::cout << "received packet, _prase_login ";
 		recv.skip_byte();
 
 		// Read the IPv4 address in a string

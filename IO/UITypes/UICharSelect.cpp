@@ -43,8 +43,8 @@
 
 namespace ms
 {
-	UICharSelect::UICharSelect(std::vector<CharEntry> characters, int8_t characters_count, int32_t slots, int8_t require_pic) : UIElement(Point<int16_t>(0, 0), Point<int16_t>(800, 600)),
-		characters(characters), characters_count(characters_count), slots(slots), require_pic(require_pic), tab_index(0), tab_active(false), tab_move(false), charslot_y(0), use_timestamp(false), burning_character(true), show_pic_btns(false)
+	UICharSelect::UICharSelect(std::vector<CharEntry> characters, int8_t characters_count, int32_t slots, int8_t require_pic) : UIElement(Point<int16_t>(0, 0), Point<int16_t>(VIEWSIZE.x(), VIEWSIZE.y())),
+		characters(characters), characters_count(characters_count), slots(slots), tab_index(0), tab_active(false), tab_move(false), charslot_y(0), use_timestamp(false)
 	{
 		std::string version_text = Configuration::get().get_version();
 		version = Text(Text::Font::A12B, Text::Alignment::LEFT, Color::Name::LEMONGRASS, "Ver. " + version_text);
@@ -80,20 +80,15 @@ namespace ms
 		//world_sprites.emplace_back(selectedWorld["name"][world]);
 		world_sprites.emplace_back(selectedWorld["ch"][channel_id]);
 
-		nl::node map = nl::nx::Map001["Back"]["UI_login.img"];
+		nl::node map = nl::nx::Map["Back"]["login.img"];
 		nl::node back = map["back"];
 
-		sprites.emplace_back(back["1"], Point<int16_t>(512, 384));
+		sprites.emplace_back(back["14"], Point<int16_t>(0, VIEWSIZE.y()/2));
 
-		for (nl::node node : map["ani"])
-			sprites.emplace_back(node, Point<int16_t>(0, -2));
+		//for (nl::node node : map["ani"])
+		//	sprites.emplace_back(node, Point<int16_t>(0, -2));
 
-		sprites.emplace_back(back["2"], Point<int16_t>(512, 384));
-
-		nl::node BurningNotice = Common["Burning"]["BurningNotice"];
-		burning_notice = BurningNotice;
-		burning_numPos = BurningNotice["numPos"];
-		burning_count = Text(Text::Font::A12B, Text::Alignment::LEFT, Color::Name::CREAM, "1");
+		sprites.emplace_back(back["15"], Point<int16_t>(-VIEWSIZE.x() / 4, VIEWSIZE.y() / 2));
 
 		charinfo = CharSelect["charInfo1"];
 
@@ -176,10 +171,14 @@ namespace ms
 		for (size_t i = 0; i < InfoLabel::NUM_LABELS; i++)
 			infolabels[i] = OutlinedText(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::WHITE, Color::Name::TOBACCOBROWN);
 
+		Point<int16_t> startpos = Point<int16_t>(50, 0);
+		int i = 0;
 		for (CharEntry& entry : characters)
 		{
-			charlooks.emplace_back(entry.look);
-			nametags.emplace_back(nametag, Text::Font::A12M, entry.stats.name);
+			std::cout << "trying to show character " << characters.size();
+			charlooks.emplace_back(entry.look, startpos * i + Point<int16_t>(VIEWSIZE.x()/2,VIEWSIZE.y()/2));
+			nametags.emplace_back(nametag, Text::Font::A12M, entry.stats.name, startpos * i + Point<int16_t>(VIEWSIZE.x() / 2, VIEWSIZE.y() / 2));
+			i++;
 		}
 
 		emptyslot_effect = CharSelect["character"]["0"];
@@ -208,13 +207,13 @@ namespace ms
 				Configuration::get().get_auto_cid()
 			).dispatch();
 		}
+		position = Point<int16_t>(VIEWSIZE.x() / 2, 0);
 	}
 
 	void UICharSelect::draw(float inter) const
 	{
 		UIElement::draw_sprites(inter);
 
-		version.draw(position + version_pos - Point<int16_t>(0, 5));
 
 		charslot.draw(position + charslot_pos - Point<int16_t>(0, charslot_y));
 		charslotlabel.draw(position + charslot_pos + Point<int16_t>(113, 5 - charslot_y));
@@ -262,16 +261,6 @@ namespace ms
 				}
 
 				uint8_t j = 0;
-				uint16_t job = character_stats.stats[MapleStat::Id::JOB];
-
-				if (job >= 0 && job < 1000)
-					j = 0;
-				else if (job >= 1000 && job < 2000)
-					j = 1;
-				else if (job >= 2000 && job < 2200)
-					j = 2;
-				else
-					j = 0;
 
 				signpost[j].draw(chararg);
 				charlooks[index].draw(chararg, inter);
@@ -293,17 +282,6 @@ namespace ms
 		if (tab_active)
 			tab.draw(position + tab_pos[tab_index] + Point<int16_t>(0, tab_move_pos));
 
-		if (burning_character)
-		{
-			burning_notice.draw(position + BtNewPos, inter);
-			burning_count.draw(position + BtNewPos + burning_numPos + Point<int16_t>(8, -4));
-		}
-
-		pagebase.draw(position + pagepos);
-		pagenumber.draw(current.substr(0, 1), position + pagepos + Point<int16_t>(pagenumberpos[0]));
-		pagenumber.draw(current.substr(1, 1), position + pagepos + Point<int16_t>(pagenumberpos[1]));
-		pagenumber.draw(total.substr(0, 1), position + pagepos + Point<int16_t>(pagenumberpos[2]));
-		pagenumber.draw(total.substr(1, 1), position + pagepos + Point<int16_t>(pagenumberpos[3]));
 	}
 
 	void UICharSelect::update()
@@ -352,18 +330,15 @@ namespace ms
 			effect.update();
 
 		emptyslot_effect.update();
-
-		if (burning_character)
-			burning_notice.update();
 	}
 
 	void UICharSelect::doubleclick(Point<int16_t> cursorpos)
 	{
-		//uint16_t button_index = selected_character + Buttons::CHARACTER_SLOT0;
-		//auto& btit = buttons[button_index];
+		uint16_t button_index = selected_character + Buttons::CHARACTER_SLOT0;
+		auto& btit = buttons[button_index];
 
-		//if (btit->is_active() && btit->bounds(position).contains(cursorpos) && btit->get_state() == Button::State::NORMAL && button_index >= Buttons::CHARACTER_SLOT0)
-		//	button_pressed(Buttons::BtSelect);
+		if (btit->is_active() && btit->bounds(position).contains(cursorpos) && btit->get_state() == Button::State::NORMAL && button_index >= Buttons::CHARACTER_SLOT0)
+			button_pressed(Buttons::BtSelect);
 	}
 
 	Cursor::State UICharSelect::send_cursor(bool clicked, Point<int16_t> cursorpos)

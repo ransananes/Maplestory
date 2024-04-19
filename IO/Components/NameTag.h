@@ -27,6 +27,7 @@ namespace ms
 	{
 	public:
 		NameTag(nl::node src, Text::Font font, std::string name);
+		NameTag(nl::node src, Text::Font font, std::string name, Point<int16_t> pos);
 
 		void draw(Point<int16_t> position) const;
 		void set_selected(bool selected);
@@ -35,5 +36,6 @@ namespace ms
 		OutlinedText name;
 		BoolPair<std::vector<Texture>> textures;
 		bool selected;
+		Point<int16_t> position;
 	};
 }
