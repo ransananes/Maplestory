@@ -39,7 +39,6 @@ namespace ms
 			wizet_ended = false;
 
 		user_clicked = false;
-		
 
 		nl::node Logo = nl::nx::UI["Logo.img"];
 		Wizet = Logo["Wizet"];

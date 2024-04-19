@@ -99,14 +99,7 @@ namespace ms
 		{
 			cryptography.decrypt(buffer, length);
 
-			try
-			{
-				packetswitch.forward(buffer, length);
-			}
-			catch (const PacketError& err)
-			{
-				LOG(LOG_NETWORK, err.what());
-			}
+			packetswitch.forward(buffer, length);
 
 			pos = 0;
 			length = 0;
@@ -125,21 +118,21 @@ namespace ms
 	void Session::write(int8_t* packet_bytes, size_t packet_length)
 	{
 		if (!connected)
+		{
 			return;
-
+		}
 		int8_t header[HEADER_LENGTH];
 		cryptography.create_header(header, packet_length);
 		cryptography.encrypt(packet_bytes, packet_length);
-
 		socket.dispatch(header, HEADER_LENGTH);
 		socket.dispatch(packet_bytes, packet_length);
+
 	}
 
 	void Session::read()
 	{
 		// Check if a packet has arrived. Handle if data is sufficient: 4 bytes (header) + 2 bytes (opcode) = 6 bytes.
 		size_t result = socket.receive(&connected);
-
 		if (result >= MIN_PACKET_LENGTH || length > 0)
 		{
 			// Retrieve buffer from the socket and process it

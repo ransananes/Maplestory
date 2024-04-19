@@ -18,6 +18,7 @@
 #include "LoginParser.h"
 
 #include "../../Session.h"
+#include <iostream>
 
 namespace ms
 {
@@ -185,6 +186,7 @@ namespace ms
 
 	void LoginParser::parse_login(InPacket& recv)
 	{
+		std::cout << "received packet, _prase_login ";
 		recv.skip_byte();
 
 		// Read the IPv4 address in a string

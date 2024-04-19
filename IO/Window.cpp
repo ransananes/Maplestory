@@ -295,16 +295,11 @@ namespace ms
 
 	void Window::toggle_fullscreen()
 	{
-		int16_t max_width = Configuration::get().get_max_width();
-		int16_t max_height = Configuration::get().get_max_height();
+		// removed due to fit any res
+		fullscreen = !fullscreen;
+		Setting<Fullscreen>::get().save(fullscreen);
 
-		if (width < max_width && height < max_height)
-		{
-			fullscreen = !fullscreen;
-			Setting<Fullscreen>::get().save(fullscreen);
-
-			initwindow();
-			glfwPollEvents();
-		}
+		initwindow();
+		glfwPollEvents();
 	}
 }

@@ -46,7 +46,7 @@ namespace ms
 			UI::get().remove(UIElement::Type::GENDER);
 
 			std::function<void()> okhandler = loginwait->get_handler();
-
+			
 			// The packet should contain a 'reason' integer which can signify various things
 			if (int32_t reason = recv.read_int())
 			{
@@ -81,6 +81,7 @@ namespace ms
 					}
 					default:
 					{
+
 						// Other reasons
 						if (reason > 0)
 						{

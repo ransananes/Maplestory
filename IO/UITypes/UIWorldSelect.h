@@ -17,16 +17,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../UIElement.h"
+#include "../UIElementCentered.h"
 
 #include "../Components/ChatBalloon.h"
 #include "../Components/Gauge.h"
 
 #include "../../Net/Login.h"
 
+#include "../../Graphics/Geometry.h"
+
 namespace ms
 {
-	class UIWorldSelect : public UIElement
+	class UIWorldSelect : public UIElementCentered
 	{
 	public:
 		static constexpr Type TYPE = UIElement::Type::WORLDSELECT;
@@ -46,8 +48,7 @@ namespace ms
 		void add_world(World world);
 		void change_world(World selectedWorld);
 		void remove_selected();
-		void set_region(uint8_t value);
-		uint16_t get_worldbyid(uint16_t worldid);
+		//uint16_t get_worldbyid(uint16_t worldid);
 
 	protected:
 		Button::State button_pressed(uint16_t buttonid) override;
@@ -60,65 +61,28 @@ namespace ms
 
 		void enter_world();
 		void clear_selected_world();
-		uint16_t get_next_world(uint16_t id, bool upward);
+		//uint16_t get_next_world(uint16_t id, bool upward);
 
 		enum Buttons : uint16_t
 		{
 			BtWorld0,
 			BtWorld1,
-			BtWorld2,
-			BtWorld3,
-			BtWorld4,
 			BtChannel0,
-			BtGoWorld = 35U,
-			BtRegion,
 			BtExit
 		};
 
 		/// If ever changing order, check the WZ file.
 		enum Worlds : uint16_t
 		{
-			SCANIA,
 			BERA,
+			SCANIA,
 			BROA,
 			WINDIA,
-			KHAINI,
-			BELLOCAN,
-			MARDIA,
-			KRADIA,
-			YELLONDE,
-			DEMETHOS,
-			GALICIA,
-			ELNIDO,
-			ZENITH,
-			ARCANIA,
-			CHAOS,
-			NOVA,
-			RENEGADES,
-			AURORA,
-			ELYSIUM,
-			KOREAN_ENOSIS = 29,
-			LUNA,
-			ELYSIUM_LINK,
-			LAB = 40,
-			KOREAN_RED = 43,
-			KOREAN_AURORA,
-			REBOOT0,
-			REBOOT1,
-			PINKBEAN = 48,
-			BURNING,
-			KOREAN_ARCANE,
-			KOREAN_NOVA,
-			TESPIA = 100
 		};
 
-		Text version;
-		Point<int16_t> version_pos;
 		Texture worlds_background;
 		Texture channels_background;
-		Point<int16_t> worldsrc_pos;
-		Point<int16_t> channelsrc_pos;
-		ChatBalloonHorizontal chatballoon;
+
 
 		uint8_t worldid;
 		uint8_t channelid;
@@ -129,14 +93,14 @@ namespace ms
 		std::map<uint16_t, uint16_t> world_map;
 
 		std::vector<Sprite> flag_sprites;
-		Texture worldNotice;
-		Texture rebootNotice;
-		Text worldNoticeMessage;
-		Gauge channel_gauge[Buttons::BtGoWorld - Buttons::BtChannel0];
+		//Gauge channel_gauge[Buttons::BtWorld0 - Buttons::BtChannel0];
 
 		bool world_selected;
 
 		nl::node worldsrc;
 		nl::node channelsrc;
+
+		// background for undefined bg
+		ColorBox background;
 	};
 }

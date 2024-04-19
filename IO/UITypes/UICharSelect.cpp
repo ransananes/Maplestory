@@ -72,12 +72,12 @@ namespace ms
 		uint8_t world_id = Configuration::get().get_worldid();
 		uint8_t channel_id = Configuration::get().get_channelid();
 
-		if (auto worldselect = UI::get().get_element<UIWorldSelect>())
-			world = worldselect->get_worldbyid(world_id);
+		//if (auto worldselect = UI::get().get_element<UIWorldSelect>())
+		//	world = worldselect->get_worldbyid(world_id);
 
 		world_sprites.emplace_back(Common["selectWorld"]);
-		world_sprites.emplace_back(selectedWorld["icon"][world]);
-		world_sprites.emplace_back(selectedWorld["name"][world]);
+		//world_sprites.emplace_back(selectedWorld["icon"][world]);
+		//world_sprites.emplace_back(selectedWorld["name"][world]);
 		world_sprites.emplace_back(selectedWorld["ch"][channel_id]);
 
 		nl::node map = nl::nx::Map001["Back"]["UI_login.img"];
@@ -359,11 +359,11 @@ namespace ms
 
 	void UICharSelect::doubleclick(Point<int16_t> cursorpos)
 	{
-		uint16_t button_index = selected_character + Buttons::CHARACTER_SLOT0;
-		auto& btit = buttons[button_index];
+		//uint16_t button_index = selected_character + Buttons::CHARACTER_SLOT0;
+		//auto& btit = buttons[button_index];
 
-		if (btit->is_active() && btit->bounds(position).contains(cursorpos) && btit->get_state() == Button::State::NORMAL && button_index >= Buttons::CHARACTER_SLOT0)
-			button_pressed(Buttons::BtSelect);
+		//if (btit->is_active() && btit->bounds(position).contains(cursorpos) && btit->get_state() == Button::State::NORMAL && button_index >= Buttons::CHARACTER_SLOT0)
+		//	button_pressed(Buttons::BtSelect);
 	}
 
 	Cursor::State UICharSelect::send_cursor(bool clicked, Point<int16_t> cursorpos)

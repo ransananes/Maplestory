@@ -187,7 +187,6 @@ namespace ms
 		if ((is_key_down[GLFW_KEY_LEFT_ALT] || is_key_down[GLFW_KEY_RIGHT_ALT]) && (is_key_down[GLFW_KEY_ENTER] || is_key_down[GLFW_KEY_KP_ENTER]))
 		{
 			Window::get().toggle_fullscreen();
-
 			is_key_down[GLFW_KEY_LEFT_ALT] = false;
 			is_key_down[GLFW_KEY_RIGHT_ALT] = false;
 			is_key_down[GLFW_KEY_ENTER] = false;

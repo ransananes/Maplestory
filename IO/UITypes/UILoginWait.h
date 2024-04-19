@@ -18,6 +18,7 @@
 #pragma once
 
 #include "../UIElementCentered.h"
+#include "../../Timer.h"
 
 namespace ms
 {
@@ -34,19 +35,23 @@ namespace ms
 		UIElement::Type get_type() const override;
 
 		void close();
-		void update() override;
-		void draw(float inter);
 		std::function<void()> get_handler();
 
 	protected:
 		Button::State button_pressed(uint16_t id) override;
 
 	private:
+
+
 		enum Buttons : uint16_t
 		{
 			BtCancel
 		};
-		Animation loadingBar;
+
+		// Test
+		ContinuousTimer timer;
+		std::chrono::time_point<std::chrono::steady_clock> timeStarted;
+		// button function
 		std::function<void()> okhandler;
 	};
 }

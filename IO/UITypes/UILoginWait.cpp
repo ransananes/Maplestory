@@ -16,14 +16,16 @@
 //	along with this program.  If not, see <https://www.gnu.org/licenses/>.		//
 //////////////////////////////////////////////////////////////////////////////////
 #include "UILoginWait.h"
+#include "../UI.h"
 
 #include "../Components/MapleButton.h"
-
 #include "../../Net/Session.h"
 
 #ifdef USE_NX
 #include <nlnx/nx.hpp>
 #endif
+#include "UILoginNotice.h"
+#include <iostream>
 
 namespace ms
 {
@@ -36,33 +38,32 @@ namespace ms
 
 		Point<int16_t> startpos = Point<int16_t>(0,0);
 		Sprite sizedbackgrnd = Sprite(backgrnd);
-		//sprites.emplace_back(backgrnd, (startpos,1.0f,1.2f));
+		sprites.emplace_back(backgrnd, DrawArgument(startpos,1.0f,1.2f));
+		sprites.emplace_back(Loading["bar"], Point<int16_t>(sizedbackgrnd.width()/2 - 10, sizedbackgrnd.height()/2 * 1.2 + 30));
 		
-		//loadingBar = Loading["bar"];
 
-		//sprites.emplace_back(Loading["circle"], startpos + Point<int16_t>(sizedbackgrnd.width()/2, sizedbackgrnd.height() - 20));
+		//buttons[Buttons::BtCancel] = std::make_unique<MapleButton>(Loading["BtCancel"], startpos + Point<int16_t>(sizedbackgrnd.width()/2, sizedbackgrnd.height()*1.2f - 40));
+		//timer = ContinuousTimer();
+		//timeStarted = timer.start();
 
-		//buttons[Buttons::BtCancel] = std::make_unique<MapleButton>(Loading["BtCancel"], startpos + Point<int16_t>(sizedbackgrnd.width() / 2, sizedbackgrnd.height()*1.2f - 0));
-
-		position = Point<int16_t>(276, 229);
 		dimension = Texture(backgrnd).get_dimensions();
 	}
 
-	void UILoginWait::update()
-	{
-		loadingBar.update(1);
-	}
-
-	void UILoginWait::draw(float inter)
-	{
-		loadingBar.draw(position, inter);
-	}
 
 	UIElement::Type UILoginWait::get_type() const
 	{
 		return TYPE;
 	}
 
+	/*
+	void UILoginWait::update()
+	{
+		if (timer.stop(timeStarted) > 500000)
+		{
+			UI::get().emplace<UILoginNotice>(UILoginNotice::Message::UNABLE_TO_LOGIN, okhandler);
+			button_pressed(0);
+		}
+	}*/
 	void UILoginWait::close()
 	{
 		deactivate();

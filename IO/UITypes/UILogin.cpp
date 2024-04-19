@@ -54,7 +54,7 @@ namespace ms
 		sprites.emplace_back(Title_new["MSTitle"], Point<int16_t>(VIEWSIZE.x()/3, 20));
 		sprites.emplace_back(nl::nx::UI["UIWindow.img"]["BetaEdition"]["BetaEdition"], Point<int16_t>(45, 20));
 
-
+		
 		nl::node _signboard = nl::nx::Map["Obj"]["login.img"]["Title"]["signboard"];
 
 		sprites.emplace_back(_signboard["0"], Point<int16_t>(VIEWSIZE.x() / 2, VIEWSIZE.y() / 2));
@@ -65,6 +65,7 @@ namespace ms
 		Sprite signboard = _signboard[0];
 		background = ColorBox(dimension.x(), dimension.y(), Color::Name::BLACK, 1.0f);
 		Point<int16_t> textfield_pos = title_pos - Point<int16_t>(signboard.width()/5.5, signboard.height()/2.2);
+		
 
 #pragma region Account
 
@@ -145,7 +146,6 @@ namespace ms
 	void UILogin::draw(float alpha) const
 	{
 		background.draw(position + Point<int16_t>(0, 7));
-
 		UIElement::draw(alpha);
 
 		version.draw(position - Point<int16_t>(0, 5));
@@ -211,14 +211,14 @@ namespace ms
 			return;
 		}
 
-		UI::get().emplace<UILoginWait>(okhandler);
 
-		auto loginwait = UI::get().get_element<UILoginWait>();
-
+		auto loginwait = UI::get().emplace<UILoginWait>(okhandler);
+		bool test = loginwait->is_active();
 		if (loginwait && loginwait->is_active())
 		{
 			LoginPacket(account_text, password_text).dispatch();
 		}
+
 	}
 
 	void UILogin::open_url(uint16_t id)

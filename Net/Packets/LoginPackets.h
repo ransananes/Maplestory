@@ -51,6 +51,7 @@ namespace ms
 			write_byte(w);
 			write_byte(i);
 			write_byte(d);
+
 		}
 	};
 

@@ -35,7 +35,6 @@ namespace ms
 	void OutPacket::dispatch()
 	{
 		Session::get().write(bytes.data(), bytes.size());
-
 		if (Configuration::get().get_show_packets())
 		{
 			if (opcode == Opcode::PONG)

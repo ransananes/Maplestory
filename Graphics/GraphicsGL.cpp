@@ -553,7 +553,7 @@ namespace ms
 		endy = 0;
 
 		if (maxwidth == 0)
-			maxwidth = 800;
+			maxwidth = 1600;
 	}
 
 	size_t GraphicsGL::LayoutBuilder::add(const char* text, size_t prev, size_t first, size_t last)
