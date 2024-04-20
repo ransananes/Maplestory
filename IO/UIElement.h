@@ -37,7 +37,6 @@ namespace ms
 			START,
 			LOGIN,
 			TOS,
-			GENDER,
 			WORLDSELECT,
 			REGION,
 			CHARSELECT,

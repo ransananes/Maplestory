@@ -24,7 +24,6 @@
 #include "../../IO/UI.h"
 
 #include "../../IO/UITypes/UICharSelect.h"
-#include "../../IO/UITypes/UIGender.h"
 #include "../../IO/UITypes/UILoginNotice.h"
 #include "../../IO/UITypes/UILoginWait.h"
 #include "../../IO/UITypes/UIRaceSelect.h"
@@ -45,7 +44,6 @@ namespace ms
 			UI::get().remove(UIElement::Type::LOGINNOTICE);
 			UI::get().remove(UIElement::Type::LOGINWAIT);
 			UI::get().remove(UIElement::Type::TOS);
-			UI::get().remove(UIElement::Type::GENDER);
 
 			std::function<void()> okhandler = loginwait->get_handler();
 
@@ -98,24 +96,11 @@ namespace ms
 			}
 			else
 			{
-				std::cout << "should be able to connect #1";
 				// Login successful
 				// The packet contains information on the account, so we initialize the account with it.
 				Account account = LoginParser::parse_account(recv);
-				std::cout << "should be able to connect #2";
-				//Configuration::get().set_admin(account.admin);
 
-				//if (account.female == 10)
-				//{
-				//	UI::get().emplace<UIGender>(okhandler);
-				//}
-				//else
-				//{
-					// Save the "Login ID" if the box for it on the login screen is checked
-				//if (Setting<SaveLogin>::get().load())
-				//		Setting<DefaultAccount>::get().save(account.name);
 				// Request the list of worlds and channels online
-				std::cout << "should be able to connect";
 				ServerRequestPacket().dispatch();
 			}
 		}

@@ -121,19 +121,6 @@ namespace ms
 		}
 	};
 
-	// TODO: remove it from the server
-	// Opcode: SET_GENDER(8)
-	class GenderPacket : public OutPacket
-	{
-	public:
-		// Send user selected Gender
-		GenderPacket(const bool female) : OutPacket(OutPacket::Opcode::SET_GENDER)
-		{
-			write_byte(1);
-			write_byte(female);
-		}
-	};
-	
 	// Opcode: SERVERLIST_REQUEST(11)
 	class ServerRequestPacket : public OutPacket
 	{

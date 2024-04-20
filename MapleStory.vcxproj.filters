@@ -372,9 +372,6 @@
     <ClCompile Include="IO\UITypes\UIEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IO\UITypes\UIGender.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="IO\UITypes\UIItemInventory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -978,9 +975,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IO\UITypes\UIExplorerCreation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IO\UITypes\UIGender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IO\UITypes\UIItemInventory.h">
