@@ -76,14 +76,13 @@ namespace ms
 		//	world = worldselect->get_worldbyid(world_id);
 
 		world_sprites.emplace_back(Common["selectWorld"]);
-		//world_sprites.emplace_back(selectedWorld["icon"][world]);
-		//world_sprites.emplace_back(selectedWorld["name"][world]);
+
 		world_sprites.emplace_back(selectedWorld["ch"][channel_id]);
 
 		nl::node map = nl::nx::Map["Back"]["login.img"];
 		nl::node back = map["back"];
 
-		sprites.emplace_back(back["14"], Point<int16_t>(0, VIEWSIZE.y()/2));
+		sprites.emplace_back(back["14"], DrawArgument(Point<int16_t>(0, VIEWSIZE.y()/2),2,1,1));
 
 		//for (nl::node node : map["ani"])
 		//	sprites.emplace_back(node, Point<int16_t>(0, -2));
@@ -171,11 +170,10 @@ namespace ms
 		for (size_t i = 0; i < InfoLabel::NUM_LABELS; i++)
 			infolabels[i] = OutlinedText(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::WHITE, Color::Name::TOBACCOBROWN);
 
-		Point<int16_t> startpos = Point<int16_t>(50, 0);
+		Point<int16_t> startpos = Point<int16_t>(100, 0);
 		int i = 0;
 		for (CharEntry& entry : characters)
 		{
-			std::cout << "trying to show character " << characters.size();
 			charlooks.emplace_back(entry.look, startpos * i + Point<int16_t>(VIEWSIZE.x()/2,VIEWSIZE.y()/2));
 			nametags.emplace_back(nametag, Text::Font::A12M, entry.stats.name, startpos * i + Point<int16_t>(VIEWSIZE.x() / 2, VIEWSIZE.y() / 2));
 			i++;
@@ -200,13 +198,6 @@ namespace ms
 				select_last_slot();
 		}
 
-		if (Configuration::get().get_auto_login())
-		{
-			SelectCharPicPacket(
-				Configuration::get().get_auto_pic(),
-				Configuration::get().get_auto_cid()
-			).dispatch();
-		}
 		position = Point<int16_t>(VIEWSIZE.x() / 2, 0);
 	}
 
@@ -625,37 +616,9 @@ namespace ms
 				{
 					Setting<DefaultCharacter>::get().save(selected_character);
 					int32_t id = characters[selected_character].id;
-
-					switch (require_pic)
-					{
-						case 0:
-						{
-							std::function<void()> onok = [&]()
-							{
-								request_pic();
-							};
-
-							UI::get().emplace<UILoginNotice>(UILoginNotice::Message::PIC_REQ, onok);
-							break;
-						}
-						case 1:
-						{
-							std::function<void(const std::string&)> onok = [id](const std::string& pic)
-							{
-								SelectCharPicPacket(pic, id).dispatch();
-							};
-
-							UI::get().emplace<UISoftKey>(onok);
-							break;
-						}
-						case 2:
-						{
-							SelectCharPacket(id).dispatch();
-							break;
-						}
-					}
+					std::cout << "\n char id should be " << id << " " << int(id);
+					SelectCharPacket(id).dispatch();				
 				}
-
 				break;
 			}
 			case Buttons::BtNew:

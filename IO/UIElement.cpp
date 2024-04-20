@@ -57,7 +57,6 @@ namespace ms
 
 	void UIElement::makeactive()
 	{
-		std::cout << "Make_active";
 		active = true;
 	}
 

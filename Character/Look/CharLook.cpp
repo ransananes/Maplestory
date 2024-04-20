@@ -206,7 +206,6 @@ namespace ms
 
 		if (action)
 			acmove = action->get_move();
-		std::cout << position.x() << " X<_>Y " << position.y() << "\n";
 		DrawArgument relargs = { acmove, flip };
 		DrawArgument pos = (position);
 		Stance::Id interstance = stance.get(alpha);
@@ -226,7 +225,6 @@ namespace ms
 			}
 		}
 		DrawArgument test = relargs + args + pos;
-		std::cout << pos.getpos().x() << " X<_>Y " << pos.getpos().y() << "\n";
 		draw(relargs + args + pos, interstance, interexpression, interframe, interexpframe);
 	}
 

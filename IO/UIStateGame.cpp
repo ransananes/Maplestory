@@ -49,14 +49,14 @@ namespace ms
 		tooltipparent = Tooltip::Parent::NONE;
 
 		const CharLook& look = Stage::get().get_player().get_look();
-		const Inventory& inventory = Stage::get().get_player().get_inventory();
+		//const Inventory& inventory = Stage::get().get_player().get_inventory();
 
 		emplace<UIStatusMessenger>();
-		emplace<UIStatusBar>(stats);
+		//emplace<UIStatusBar>(stats);
 		emplace<UIChatBar>();
 		emplace<UIMiniMap>(stats);
 		emplace<UIBuffList>();
-		emplace<UIShop>(look, inventory);
+		//emplace<UIShop>(look, inventory);
 
 		VWIDTH = Constants::Constants::get().get_viewwidth();
 		VHEIGHT = Constants::Constants::get().get_viewheight();

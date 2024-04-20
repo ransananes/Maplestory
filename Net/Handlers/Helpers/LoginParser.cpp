@@ -42,7 +42,7 @@ namespace ms
 		account.muted = recv.read_bool();
 
 		recv.skip_long(); // muted until
-		recv.skip_long(); // creation date
+		recv.skip_long(); // creation date that nobody cares 
 
 		recv.skip_int(); // Remove "Select the world you want to play in"
 
@@ -86,15 +86,11 @@ namespace ms
 
 	CharEntry LoginParser::parse_charentry(InPacket& recv)
 	{
-		std::cout << "I wonder where it fails?";
 		int32_t cid = recv.read_int();
-		std::cout << "cid -> \n" + cid;
 
 		StatsEntry stats = parse_stats(recv);
-		std::cout << " \n maybe higher versions has more stats??";
 		LookEntry look = parse_look(recv);
-		std::cout << " \n maybe hgiher versions has more look??";
-		std::cout << " \n@@@@@@@";
+
 		//recv.read_bool(); // 'rankinfo' bool
 
 		//if (recv.read_bool())
@@ -115,10 +111,12 @@ namespace ms
 
 	StatsEntry LoginParser::parse_stats(InPacket& recv)
 	{
+		std::cout << "\n @@@@@@Trying to parse stats";
 		// TODO: This is similar to CashShopParser.cpp, try and merge these.
 		StatsEntry statsentry;
 
 		statsentry.name = recv.read_padded_string(13);
+		std::cout << "\n" << statsentry.name;
 		statsentry.female = recv.read_bool();
 
 		recv.read_byte();	// skin
@@ -127,6 +125,8 @@ namespace ms
 
 		for (size_t i = 0; i < 3; i++)
 			statsentry.petids.push_back(recv.read_long());
+
+
 
 		statsentry.stats[MapleStat::Id::LEVEL] = recv.read_short();
 		statsentry.stats[MapleStat::Id::JOB] = recv.read_short();
@@ -142,8 +142,6 @@ namespace ms
 		statsentry.stats[MapleStat::Id::SP] = recv.read_short();
 		statsentry.exp = recv.read_int();
 		statsentry.stats[MapleStat::Id::FAME] = recv.read_short();
-
-		recv.skip(4); // gachaexp
 
 		statsentry.mapid = recv.read_int();
 		statsentry.portal = recv.read_byte();

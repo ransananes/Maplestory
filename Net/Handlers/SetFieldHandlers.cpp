@@ -58,14 +58,13 @@ namespace ms
 
 	void SetFieldHandler::handle(InPacket& recv) const
 	{
-		Constants::Constants::get().set_viewwidth(Setting<Width>::get().load());
-		Constants::Constants::get().set_viewheight(Setting<Height>::get().load());
+		std::cout << "\n trying to start game";
 
-		int32_t channel = recv.read_int();
-		int8_t mode1 = recv.read_byte();
-		int8_t mode2 = recv.read_byte();
+		int8_t channel = recv.read_byte();
+		int8_t first_log = recv.read_byte();
+		//int8_t mode2 = recv.read_byte();
 
-		if (mode1 == 0 && mode2 == 0)
+		if (first_log == 0)
 			change_map(recv, channel);
 		else
 			set_field(recv);
@@ -83,18 +82,23 @@ namespace ms
 
 	void SetFieldHandler::set_field(InPacket& recv) const
 	{
-		recv.skip(23);
-
 		int32_t cid = recv.read_int();
+
 		auto charselect = UI::get().get_element<UICharSelect>();
 
 		if (!charselect)
+		{
+			std::cout << "\n error on char select";
 			return;
-
+		}
 		const CharEntry& playerentry = charselect->get_character(cid);
 
 		if (playerentry.id != cid)
+		{
+			std::cout << "\n ??";
 			return;
+		}
+		std::cout << "\n $$";
 
 		Stage::get().loadplayer(playerentry);
 
@@ -102,23 +106,23 @@ namespace ms
 
 		Player& player = Stage::get().get_player();
 
-		recv.read_byte(); // 'buddycap'
+		//recv.read_byte(); // 'buddycap'
 
-		if (recv.read_bool())
-			recv.read_string(); // 'linkedname'
+		//if (recv.read_bool())
+		//	recv.read_string(); // 'linkedname'
 
-		CharacterParser::parse_inventory(recv, player.get_inventory());
-		CharacterParser::parse_skillbook(recv, player.get_skills());
-		CharacterParser::parse_cooldowns(recv, player);
-		CharacterParser::parse_questlog(recv, player.get_quests());
-		CharacterParser::parse_minigame(recv);
-		CharacterParser::parse_ring1(recv);
-		CharacterParser::parse_ring2(recv);
-		CharacterParser::parse_ring3(recv);
-		CharacterParser::parse_teleportrock(recv, player.get_teleportrock());
-		CharacterParser::parse_monsterbook(recv, player.get_monsterbook());
-		CharacterParser::parse_nyinfo(recv);
-		CharacterParser::parse_areainfo(recv);
+		//CharacterParser::parse_inventory(recv, player.get_inventory());
+		//CharacterParser::parse_skillbook(recv, player.get_skills());
+		//CharacterParser::parse_cooldowns(recv, player);
+		//CharacterParser::parse_questlog(recv, player.get_quests());
+		//CharacterParser::parse_minigame(recv);
+		//CharacterParser::parse_ring1(recv);
+		//CharacterParser::parse_ring2(recv);
+		//CharacterParser::parse_ring3(recv);
+		//CharacterParser::parse_teleportrock(recv, player.get_teleportrock());
+		//CharacterParser::parse_monsterbook(recv, player.get_monsterbook());
+		//CharacterParser::parse_nyinfo(recv);
+		//CharacterParser::parse_areainfo(recv);
 
 		player.recalc_stats(true);
 
