@@ -182,9 +182,6 @@ namespace ms
 			break;
 		case Buttons::YES:
 		{
-			Constants::Constants::get().set_viewwidth(1024);
-			Constants::Constants::get().set_viewheight(768);
-
 			float fadestep = 0.025f;
 
 			Window::get().fadeout(

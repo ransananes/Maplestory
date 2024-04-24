@@ -78,9 +78,22 @@ namespace ms
 
 	bool running()
 	{
-		return Session::get().is_connected()
-			&& UI::get().not_quitted()
-			&& Window::get().not_closed();
+		ms::Session& session = ms::Session::get(); // Assuming you have a singleton method to get the session
+
+		// Check if session is connected
+		if (!session.is_connected()) {
+			// Attempt to reconnect
+			session.reconnect();
+		}
+
+		// Check if session is still connected after attempting reconnection
+		if (!session.is_connected()) {
+			// Return false if still not connected
+			return false;
+		}
+
+		// Check other conditions for running
+		return UI::get().not_quitted() && Window::get().not_closed();
 	}
 
 	void loop()

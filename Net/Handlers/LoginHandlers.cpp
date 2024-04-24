@@ -39,7 +39,7 @@ namespace ms
 		std::cout << reason;
 		if (loginwait && loginwait->is_active())
 		{
-			std::cout << "Does it even connect here?";
+
 			// Remove previous UIs
 			UI::get().remove(UIElement::Type::LOGINNOTICE);
 			UI::get().remove(UIElement::Type::LOGINWAIT);
@@ -81,7 +81,6 @@ namespace ms
 					}
 					default:
 					{
-
 						// Other reasons
 						if (reason > 0)
 						{
@@ -214,9 +213,7 @@ namespace ms
 				characters.emplace_back(LoginParser::parse_charentry(recv));
 			}
 			int8_t pic = recv.read_byte();
-			std::cout << "pic <" << pic;
 			int32_t slots = recv.read_int();
-			std::cout << "slots <" << slots;
 
 			// Remove previous UIs
 			UI::get().remove(UIElement::Type::LOGINNOTICE);

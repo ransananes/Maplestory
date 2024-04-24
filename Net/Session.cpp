@@ -31,7 +31,10 @@ namespace ms
 	Session::~Session()
 	{
 		if (connected)
+		{
+			std::cout << "\n is the destructor happening?";
 			socket.close();
+		}
 	}
 
 	bool Session::init(const char* host, const char* port)
@@ -66,10 +69,13 @@ namespace ms
 	void Session::reconnect(const char* address, const char* port)
 	{
 		// Close the current connection and open a new one
-		bool success = socket.close();
+		bool errors = socket.close();
 
-		if (success)
-			init(address, port);
+		if (!errors)
+		{
+			std::cout << "\n Reconnecting..";
+			connected = init(address, port);
+		}
 		else
 			connected = false;
 	}
@@ -126,7 +132,6 @@ namespace ms
 		cryptography.encrypt(packet_bytes, packet_length);
 		socket.dispatch(header, HEADER_LENGTH);
 		socket.dispatch(packet_bytes, packet_length);
-
 	}
 
 	void Session::read()

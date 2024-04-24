@@ -616,7 +616,6 @@ namespace ms
 				{
 					Setting<DefaultCharacter>::get().save(selected_character);
 					int32_t id = characters[selected_character].id;
-					std::cout << "\n char id should be " << id << " " << int(id);
 					SelectCharPacket(id).dispatch();				
 				}
 				break;

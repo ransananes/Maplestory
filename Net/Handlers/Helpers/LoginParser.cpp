@@ -111,7 +111,6 @@ namespace ms
 
 	StatsEntry LoginParser::parse_stats(InPacket& recv)
 	{
-		std::cout << "\n @@@@@@Trying to parse stats";
 		// TODO: This is similar to CashShopParser.cpp, try and merge these.
 		StatsEntry statsentry;
 

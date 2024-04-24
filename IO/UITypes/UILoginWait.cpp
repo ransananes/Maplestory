@@ -39,12 +39,12 @@ namespace ms
 		Point<int16_t> startpos = Point<int16_t>(-100, -VIEWSIZE.y()/6.1);
 		Sprite sizedbackgrnd = Sprite(backgrnd);
 		sprites.emplace_back(backgrnd, DrawArgument(startpos,1.0f,1.2f));
-		sprites.emplace_back(Loading["bar"], startpos+Point<int16_t>(sizedbackgrnd.width()/2 - 10, sizedbackgrnd.height()/2 * 1.2 + 30));
+		//sprites.emplace_back(Loading["bar"], startpos+Point<int16_t>(sizedbackgrnd.width()/2 - 10, sizedbackgrnd.height()/2 * 1.2 + 30));
 		
 
 		//buttons[Buttons::BtCancel] = std::make_unique<MapleButton>(Loading["BtCancel"], startpos + Point<int16_t>(sizedbackgrnd.width()/2, sizedbackgrnd.height()*1.2f - 40));
-		//timer = ContinuousTimer();
-		//timeStarted = timer.start();
+		timer = ContinuousTimer();
+		timeStarted = timer.start();
 		dimension = Texture(backgrnd).get_dimensions();
 	}
 
@@ -54,15 +54,14 @@ namespace ms
 		return TYPE;
 	}
 
-	/*
 	void UILoginWait::update()
 	{
-		if (timer.stop(timeStarted) > 500000)
+		if (timer.stop(timeStarted) > 1000000)
 		{
 			UI::get().emplace<UILoginNotice>(UILoginNotice::Message::UNABLE_TO_LOGIN, okhandler);
 			button_pressed(0);
 		}
-	}*/
+	}
 	void UILoginWait::close()
 	{
 		deactivate();

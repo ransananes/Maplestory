@@ -29,6 +29,7 @@
 #include "../../IO/Window.h"
 
 #include "../../IO/UITypes/UICharSelect.h"
+#include "../Session.h"
 
 namespace ms
 {
@@ -59,6 +60,13 @@ namespace ms
 	void SetFieldHandler::handle(InPacket& recv) const
 	{
 		std::cout << "\n trying to start game";
+
+		// trying to reconnect to a channel server
+		Setting<ServerPort>::get().save("7575");
+
+		std::cout << Setting<ServerPort>::get().load();
+
+		Session().reconnect();
 
 		int8_t channel = recv.read_byte();
 		int8_t first_log = recv.read_byte();

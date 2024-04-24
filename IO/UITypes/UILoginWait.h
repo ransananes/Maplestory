@@ -35,6 +35,7 @@ namespace ms
 		UIElement::Type get_type() const override;
 
 		void close();
+		void update();
 		std::function<void()> get_handler();
 
 	protected:

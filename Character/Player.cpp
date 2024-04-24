@@ -464,7 +464,7 @@ namespace ms
 
 	float Player::get_walkforce() const
 	{
-		return 0.05f + 0.11f * static_cast<float>(stats.get_total(EquipStat::Id::SPEED)) / 100;
+		return 0.10f + 0.11f * static_cast<float>(stats.get_total(EquipStat::Id::SPEED)) / 100;
 	}
 
 	float Player::get_jumpforce() const
